@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequential Hover Effects</title>
+    <style>
+        #hoverElement {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            line-height: 100px;
+            transition: background-color 0.3s, transform 0.3s; /* Smooth transition effect */
+        }
+
+        /* First hover effect */
+        #hoverElement:not(.second-hover):hover {
+            background-color: #e74c3c;
+        }
+
+        /* Second hover effect */
+        #hoverElement.second-hover:hover {
+            background-color: #2ecc71;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="hoverElement" onclick="toggleHover()">Hover me</div>
+
+    <script>
+        function toggleHover() {
+            const hoverElement = document.getElementById('hoverElement');
+
+            // Toggle between the hover effects by adding/removing a class
+            hoverElement.classList.toggle('second-hover');
+        }
+    </script>
+</body>
+</html>

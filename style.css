@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@300&family=Roboto+Mono&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: black;
+  color: #9b9b9b;
+  font-family: Roboto Mono;
+}
+.container {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.count {
+  font-size: 20em;
+  text-align: center;
+  font-family: Oswald;
+  color: #80808082;
+  transition: all 0.3s ease-out;
+  opacity: 1;
+}
+
+.main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.playbtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  z-index: 1;
+}
+.container:hover {
+  .playbtn {
+    opacity: 1;
+  }
+  .count {
+    opacity: 0.5;
+  }
+  .second-hover{
+    opacity: 1 ;
+  }
+}
+/* .container:hover{
+  .playbtn {
+    opacity: 1;
+  }
+  .count {
+    opacity: 0.5;
+  }
+  .second-hover{
+    opacity: 1 ;
+  }
+} */
+.start {
+  width: 110px;
+}
+.reset {
+  width: 110px;
+}
+.stop {
+  width: 110px;
+}
+.second-hover {
+  display: flex;
+  gap: 55px;
+  transition: all 0.3s ease-out;
+  opacity: 0;
+}
