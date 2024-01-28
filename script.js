@@ -79,15 +79,6 @@ resetbtn.addEventListener('click', () => {
     count.style.opacity = '';
     clicks = 0;
     timer = false;
-    start.style.opacity = ''; // Ensure start button is hidden after clicking reset button
+    start.style.opacity = ''; 
 });
 
-// count.addEventListener('mouseover', () => {
-//     if (timer && resetbtn.style.opacity === '1') {
-//         start.style.opacity = 0;
-//     }
-// });
-
-// count.addEventListener('mouseout', () => {
-//     start.style.opacity = timer ? 0 : '';
-// });
