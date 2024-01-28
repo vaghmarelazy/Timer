@@ -3,74 +3,91 @@ let min = 0;
 let timer = false;
 let timeinterval;
 
+const count = document.querySelector('.count');
+const start = document.querySelector(".playbtn");
+const stopbtn = document.querySelector(".stop");
+const changingbtn = document.querySelector('.stopbtn');
+const resetbtn = document.querySelector(".reset");
+
+stopbtn.style.opacity = 0;
+resetbtn.style.opacity = 0;
+
 function timeupdate() {
     sec++;
-    if (sec == 60) {
+    if (sec === 60) {
         sec = 0;
-        min++
+        min++;
     }
-    const formattedsec = sec < 10 ? `0${sec}` : sec;
-    const formattedmin = min < 10 ? `0${min}` : min;
+    const formattedSec = sec < 10 ? `0${sec}` : sec;
+    const formattedMin = min < 10 ? `0${min}` : min;
 
-    const count = document.querySelector('.count');
     if (count) {
-        count.innerText = `${formattedmin}:${formattedsec}`;
+        count.innerText = `${formattedMin}:${formattedSec}`;
     }
 }
+
 function reset() {
     sec = 0;
     min = 0;
-    const count = document.querySelector('.count');
     if (count) {
         count.innerHTML = '00:00';
     }
 }
-let start = document.querySelector(".playbtn");
-let count = document.querySelector(".count");
-let stopbtn = document.querySelector(".stop");
-let changingbtn = document.querySelector('.stopbtn')
-let resetbtn = document.querySelector(".reset");
-if (count && stopbtn && resetbtn) {
+
+function toggleTimer() {
+    start.style.opacity = timer ? 0 : '';
+    count.style.opacity = timer ? '' : 1;
+    stopbtn.style.opacity = timer ? 1 : 0;
+    resetbtn.style.opacity = timer ? 1 : 0;
+}
+
+start.addEventListener('click', () => {
+    timer = !timer;
+    toggleTimer();
+    start.style.opacity = 0
+
+    if (timer) {
+        clearInterval(timeinterval);
+        timeinterval = setInterval(timeupdate, 1000);
+    } else {
+        clearInterval(timeinterval);
+    }
+});
+
+let clicks = 0;
+stopbtn.addEventListener('click', () => {
+    timer = !timer;
+    clicks++;
+    changingbtn.src = clicks % 2 !== 0 ? 'svg/play-circle.svg' : 'svg/pause.svg';
+    document.querySelector(".s").innerHTML = clicks % 2 !== 0 ? 'RESUME' : 'STOP';
+    clearInterval(timeinterval);
+
+    if (timer) {
+        timeinterval = setInterval(timeupdate, 1000);
+    }
+});
+
+resetbtn.addEventListener('click', () => {
+    reset();
+    clearInterval(timeinterval);
+    changingbtn.src = 'svg/pause.svg';
+    document.querySelector(".s").innerHTML = 'STOP';
+
+    start.style.opacity = '';
     stopbtn.style.opacity = 0;
     resetbtn.style.opacity = 0;
+    count.style.opacity = '';
+    clicks = 0;
+    timer = false;
+    start.style.opacity = ''; // Ensure start button is hidden after clicking reset button
+});
 
-    start.addEventListener('click', (e) => {
-        start.style.opacity = 0;
-        count.style.opacity = '';
-        stopbtn.style.opacity = 1;
-        resetbtn.style.opacity = 1;
-        timer = !timer;
+// count.addEventListener('mouseover', () => {
+//     if (timer && resetbtn.style.opacity === '1') {
+//         start.style.opacity = 0;
+//     }
+// });
 
-        if (timer) {
-            clearInterval(timeinterval);
-            // reset()
-            timeinterval = setInterval(timeupdate, 1000);
-        }
-    });
-    let clicks = 0;
-    stopbtn.addEventListener('click', (e) => {
-        timer = !timer;
-        clicks++
-        changingbtn.src = 'svg/play-circle.svg';
-        if (clicks % 2 != 0) {
-            document.querySelector(".s").innerHTML = 'RESUME';
-            clearInterval(timeinterval);
-        } else if (clicks % 2 == 0) {
-            changingbtn.src = 'pause.svg';
-            document.querySelector(".s").innerHTML = 'STOP';
-            timeinterval = setInterval(timeupdate, 1000);
-        }
-    });
-    resetbtn.addEventListener('click', () => {
-        clearInterval(timeinterval);
-        changingbtn.src = 'svg/pause.svg';
-        document.querySelector(".s").innerHTML = 'STOP';
-
-        reset();
-        start.style.opacity = ''
-        stopbtn.style.opacity = 0;
-        resetbtn.style.opacity = 0;
-        count.style.opacity = '';
-        clicks = 0; 
-    });
-}
+// count.addEventListener('mouseout', () => {
+//     start.style.opacity = timer ? 0 : '';
+// });
